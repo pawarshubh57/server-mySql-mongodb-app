@@ -1,12 +1,19 @@
 
-const Crypto = require("crypto");
+var CryptoJS = require("crypto-js");
 
-var encrypted = function(data){
-    var cipher = Crypto.createCipher('aes-256-cbc', "mypassword");
-        var encrypted = Buffer.concat([cipher.update(new Buffer(JSON.stringify(data), "utf8")), cipher.final()]);      
-        return { message: encrypted};
+const  encryptObject = function(plainObject, secretKey){
+    var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(plainObject), secretKey).toString();
+    return ciphertext;
+}
+const encryptString = function(plainText, secretKey){
+    var ciphertext = CryptoJS.AES.encrypt(plainText, secretKey).toString();
+    return ciphertext;
 }
 
-module.exports = encrypted;
+
+module.exports = {
+    encryptObject,
+    encryptString
+} 
 
 
